@@ -1,9 +1,6 @@
 package com.ict.edu3.domain.auth.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.ict.edu3.common.util.JwtUtil;
@@ -13,9 +10,6 @@ import com.ict.edu3.domain.auth.vo.UserVO;
 
 @Service
 public class AuthService {
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
     @Autowired
     private MyUserDetailService myUserDetailService;
 

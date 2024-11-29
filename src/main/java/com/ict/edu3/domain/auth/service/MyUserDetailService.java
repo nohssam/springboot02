@@ -7,10 +7,12 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import com.ict.edu3.domain.auth.mapper.AuthMapper;
 import com.ict.edu3.domain.auth.vo.UserVO;
 
+@Service
 public class MyUserDetailService implements UserDetailsService {
     @Autowired
     private AuthMapper authMapper;

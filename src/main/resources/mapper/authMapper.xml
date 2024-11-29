@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 반드시 mapper 위치로 설정해야 된다. -->
+<mapper namespace="com.ict.edu3.domain.auth.mapper.AuthMapper">
+	<select id="selectMember"  parameterType="String" resultType="UserVO">
+		select * from members where m_id = #{m_id}
+	</select>
+</mapper>
+
+
+
+
+
+

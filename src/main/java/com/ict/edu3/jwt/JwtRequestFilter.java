@@ -33,6 +33,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        System.out.println("JwtRequestFilter");
         // 요청 헤더에서 Authorization 값 확인
         final String requestTokenHeader = request.getHeader("Authorization");
         String username = null;
