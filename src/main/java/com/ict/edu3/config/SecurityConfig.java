@@ -17,13 +17,16 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.ict.edu3.jwt.JwtRequestFilter;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Configuration
 public class SecurityConfig {
 
     private JwtRequestFilter jwtRequestFilter;
 
     public SecurityConfig(JwtRequestFilter jwtRequestFilter) {
-        System.out.println("SecurityFilterChain 생성자");
+        log.info("SecurityConfig 호출\n");
         this.jwtRequestFilter = jwtRequestFilter;
     }
 
@@ -31,7 +34,7 @@ public class SecurityConfig {
     // addFilterBefore 때문에 JwtRequestFilter가 먼저 실행된다.
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
+        log.info("SecurityFilterChain 호출\n");
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())

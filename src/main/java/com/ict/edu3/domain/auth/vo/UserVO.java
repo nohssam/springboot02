@@ -14,6 +14,8 @@ public class UserVO implements UserDetails {
 
     private String m_id = "";
     private String m_pw = "";
+
+    // Oath2에서 필요한 정보
     private String email = "";
     private String phone = "";
     private String name = "";

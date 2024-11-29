@@ -17,9 +17,11 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 
 // 토큰을 추출하고, 유효성 검사하여 , 유효한 경우만 사용자 정보를 로드,
 // 즉, 보호된 리소스에 대한 접근이 가능한 사용자인지 확인 
+@Slf4j
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
@@ -33,7 +35,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        System.out.println("JwtRequestFilter");
+        log.info("JwtRequestFilter 호출\n");
         // 요청 헤더에서 Authorization 값 확인
         final String requestTokenHeader = request.getHeader("Authorization");
         String username = null;
@@ -43,24 +45,27 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
             // 토큰 추출
             jwtToken = requestTokenHeader.substring(7);
-
+            log.info("JwtRequestFilter 추출메서드\n");
             try {
                 // 이름추출 (id)
                 username = jwtUtil.extractuserName(jwtToken);
+                log.info("username : " + username + "\n");
+
             } catch (Exception e) {
-                System.out.println("JWT 오류");
                 logger.warn("JWT Token error");
             }
         } else {
-            System.out.println("JWT 없음");
             logger.warn("JWT Token empty");
         }
 
         // 사용자이름(아이디)추출, 현재SecurityContext에 인증정보가 설정되었는지 확인 없으면 다음 단계진행
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            // 사용자이름을 가지고 현재 DB에 있는지 검사
+            // 사용자이름을 가지고 현재 DB에 있는지 검사(MyUserDetailService에 있는 메서드 이용)
+            // DataVO에서 m_id, m_pw, 를 username, password
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+            log.info("userDetails.username : " + userDetails.getUsername() + "\n");
+            log.info("userDetails.username : " + userDetails.getPassword() + "\n");
 
             if (jwtUtil.validateToken(jwtToken, userDetails)) {
                 // Spring Security 인증객체 생성
