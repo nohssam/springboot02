@@ -76,7 +76,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 usernamePasswordAuthenticationToken
                         .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                // Spring Security 컨텍스트에 저장
+                // 인증 성공 후 아래 코드로 인증 객체를 SecurityContext에 설정
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
         }
