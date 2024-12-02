@@ -41,7 +41,7 @@ public class SecurityConfig {
                 // 요청별 권한 설정
                 .authorizeHttpRequests(authorize -> authorize
                         // 특정 URL에 인증없이 허용
-                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/api/members/join", "/api/members/login", "/api/members/logout").permitAll()
                         // 나머지는 인증 필요
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
@@ -54,7 +54,7 @@ public class SecurityConfig {
         CorsConfiguration corsConfig = new CorsConfiguration();
 
         // 허용할 Origin 설정
-        corsConfig.setAllowedOrigins(Arrays.asList("*"));
+        corsConfig.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
         // 허용할 http 메서드 설정
         corsConfig.setAllowedMethods(Arrays.asList("*"));
         // 허용할 헤더 설정

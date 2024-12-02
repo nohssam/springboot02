@@ -65,7 +65,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             // DataVO에서 m_id, m_pw, 를 username, password
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
             log.info("userDetails.username : " + userDetails.getUsername() + "\n");
-            log.info("userDetails.username : " + userDetails.getPassword() + "\n");
+            log.info("userDetails.password : " + userDetails.getPassword() + "\n");
 
             if (jwtUtil.validateToken(jwtToken, userDetails)) {
                 // Spring Security 인증객체 생성

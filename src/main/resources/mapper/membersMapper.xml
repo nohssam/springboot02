@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 반드시 mapper 위치로 설정해야 된다. -->
+<mapper namespace="com.ict.edu3.domain.members.mapper.MembersMapper">
+	<insert id="getMembersJoin" parameterType="MembersVO">
+		insert into members(m_id, m_pw, m_name, m_age, m_reg)
+		values(#{m_id},#{m_pw},#{m_name},#{m_age},now())
+	</insert>
+</mapper>
+
+
+
+
+
+
