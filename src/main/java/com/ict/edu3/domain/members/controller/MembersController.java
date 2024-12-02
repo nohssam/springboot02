@@ -78,7 +78,7 @@ public class MembersController {
 
             // JWT 토큰 생성 및 전송
             String token = jwtUtil.generateToken(mvo.getM_id());
-            log.info(token);
+            dataVO.setData(membersVO);
             dataVO.setSuccess(true);
             dataVO.setMessage("로그인 성공");
             dataVO.setToken(token);
