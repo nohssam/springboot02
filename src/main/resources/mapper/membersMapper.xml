@@ -9,6 +9,10 @@
 		insert into members(m_id, m_pw, m_name, m_age, m_reg)
 		values(#{m_id},#{m_pw},#{m_name},#{m_age},now())
 	</insert>
+	
+	<select id="getMembersById" parameterType="String" resultType="MembersVO">
+		select * from members where m_id = #{m_id}
+	</select>
 </mapper>
 
 

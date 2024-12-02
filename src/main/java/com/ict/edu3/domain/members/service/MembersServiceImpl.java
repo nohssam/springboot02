@@ -16,4 +16,9 @@ public class MembersServiceImpl implements MembersService {
         return membersMapper.getMembersJoin(mvo);
     }
 
+    @Override
+    public MembersVO getMembersById(String m_id) {
+        return membersMapper.getMembersById(m_id);
+    }
+
 }
