@@ -41,7 +41,9 @@ public class SecurityConfig {
                 // 요청별 권한 설정
                 .authorizeHttpRequests(authorize -> authorize
                         // 특정 URL에 인증없이 허용
-                        .requestMatchers("/api/members/join", "/api/members/login", "/api/members/logout").permitAll()
+                        .requestMatchers("/api/members/join", "/api/members/login",
+                                "/api/guestbook/list", "/api/guestbook/detail/**")
+                        .permitAll()
                         // 나머지는 인증 필요
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
