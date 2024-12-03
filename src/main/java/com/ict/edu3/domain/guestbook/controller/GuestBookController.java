@@ -3,6 +3,7 @@ package com.ict.edu3.domain.guestbook.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -59,10 +60,15 @@ public class GuestBookController {
     }
 
     @GetMapping("/delete/{gb_idx}")
-    public DataVO getGuestBookDelete(@PathVariable String gb_idx) {
+    public DataVO getGuestBookDelete(@PathVariable String gb_idx, Authentication authentication) {
         DataVO dataVO = new DataVO();
         try {
-
+            // 로그인 여부 확인
+            if (authentication == null) {
+                dataVO.setSuccess(false);
+                dataVO.setMessage("로그인이 필요합니다.");
+                return dataVO;
+            }
             int result = guestBookService.getGuestBookDelete(gb_idx);
             if (result == 0) {
                 dataVO.setSuccess(false);
