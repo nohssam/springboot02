@@ -43,13 +43,38 @@ public class GuestBookController {
         try {
             // log.info("gb_idx : " + gb_idx);
             GuestBookVO gvo = guestBookService.getGuestBookById(gb_idx);
-
+            if (gvo == null) {
+                dataVO.setSuccess(false);
+                dataVO.setMessage("게스트북 상세보기 실패");
+                return dataVO;
+            }
             dataVO.setSuccess(true);
             dataVO.setMessage("게스트북 상세보기 성공");
             dataVO.setData(gvo);
         } catch (Exception e) {
             dataVO.setSuccess(false);
             dataVO.setMessage("게스트북 상세보기 실패");
+        }
+        return dataVO;
+    }
+
+    @GetMapping("/delete/{gb_idx}")
+    public DataVO getGuestBookDelete(@PathVariable String gb_idx) {
+        DataVO dataVO = new DataVO();
+        try {
+
+            int result = guestBookService.getGuestBookDelete(gb_idx);
+            if (result == 0) {
+                dataVO.setSuccess(false);
+                dataVO.setMessage("게스트북 삭제 실패");
+                return dataVO;
+            }
+            dataVO.setSuccess(true);
+            dataVO.setMessage("게스트북 삭제 성공");
+
+        } catch (Exception e) {
+            dataVO.setSuccess(false);
+            dataVO.setMessage("게스트북 삭제 오류 발생");
         }
         return dataVO;
     }

@@ -32,8 +32,7 @@ public class GuestBookServiceImpl implements GuestBookService {
 
     @Override
     public int getGuestBookDelete(String gb_idx) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getGuestBookDelete'");
+        return guestBookMapper.getGuestBookDelete(gb_idx);
     }
 
 }

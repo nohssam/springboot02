@@ -8,10 +8,13 @@
 	<select id="getGuestBookList" resultType="GuestBookVO">
 		select * from guestbook order by gb_idx asc
 	</select>
-	
+
 	<select id="getGuestBookById" parameterType="String"  resultType="GuestBookVO" >
 		select * from guestbook where gb_idx = #{gb_idx}
 	</select>
+	<delete id="getGuestBookDelete" parameterType="String">
+		delete from guestbook where gb_idx = #{gb_idx}
+	</delete>
 </mapper>
 
 
