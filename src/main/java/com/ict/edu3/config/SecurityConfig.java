@@ -40,9 +40,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 // 요청별 권한 설정
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/upload/**").permitAll()
                         // 특정 URL에 인증없이 허용
                         .requestMatchers("/api/members/join", "/api/members/login",
-                                "/api/guestbook/list", "/api/guestbook/detail/**")
+                                "/api/guestbook/list", "/api/guestbook/detail/**", "api/guestbook/download/**")
                         .permitAll()
                         // 나머지는 인증 필요
                         .anyRequest().authenticated())
@@ -58,7 +59,7 @@ public class SecurityConfig {
         // 허용할 Origin 설정
         corsConfig.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
         // 허용할 http 메서드 설정
-        corsConfig.setAllowedMethods(Arrays.asList("*"));
+        corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         // 허용할 헤더 설정
         corsConfig.setAllowedHeaders(Arrays.asList("*"));
         // 인증정보 허용
