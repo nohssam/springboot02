@@ -17,9 +17,17 @@
 	</delete>
 	<update id="getGuestBookUpdate" parameterType="GuestBookVO">
 		update guestbook
-		set gb_name = #{gb_name}, gb_subject=#{gb_subject}, gb_email=#{gb_email}, gb_content=#{gb_content}
+		set gb_name = #{gb_name},gb_subject=#{gb_subject}, gb_email=#{gb_email}, gb_content=#{gb_content}
 		where gb_idx = #{gb_idx}
 	</update>
+
+	<insert id="getGuestBookWrite" parameterType="GuestBookVO">
+        INSERT INTO guestbook (
+            gb_name, gb_subject, gb_pw, gb_content, gb_email, gb_filename, gb_regdate, gb_id
+        ) VALUES (
+            #{gb_name}, #{gb_subject}, #{gb_pw}, #{gb_content}, #{gb_email}, #{gb_filename}, NOW(), #{gb_id}
+        )
+    </insert>
 </mapper>
 
 

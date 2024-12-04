@@ -16,4 +16,6 @@ public interface GuestBookMapper {
     int getGuestBookUpdate(GuestBookVO gvo);
 
     int getGuestBookDelete(String gb_idx);
+
+    int getGuestBookWrite(GuestBookVO gvo);
 }

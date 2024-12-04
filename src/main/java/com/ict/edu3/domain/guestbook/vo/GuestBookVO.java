@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GuestBookVO {
-    private String gb_idx, gb_name, gb_subject, gb_content, gb_email, gb_pw, gb_regdate, gb_filename;
+    private String gb_idx, gb_name, gb_subject, gb_content, gb_email, gb_pw, gb_regdate, gb_filename, gb_id;
     private MultipartFile file;
 }
