@@ -9,7 +9,7 @@ public interface GuestBookService {
 
     GuestBookVO getGuestBookById(String gb_idx);
 
-    int getGuestBookUpdate(GuestBookVO vo);
+    int getGuestBookUpdate(GuestBookVO gvo);
 
     int getGuestBookDelete(String gb_idx);
 }

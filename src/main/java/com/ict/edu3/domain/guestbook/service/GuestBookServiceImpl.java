@@ -25,9 +25,8 @@ public class GuestBookServiceImpl implements GuestBookService {
     }
 
     @Override
-    public int getGuestBookUpdate(GuestBookVO vo) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getGuestBookUpdate'");
+    public int getGuestBookUpdate(GuestBookVO gvo) {
+        return guestBookMapper.getGuestBookUpdate(gvo);
     }
 
     @Override

@@ -15,6 +15,11 @@
 	<delete id="getGuestBookDelete" parameterType="String">
 		delete from guestbook where gb_idx = #{gb_idx}
 	</delete>
+	<update id="getGuestBookUpdate" parameterType="GuestBookVO">
+		update guestbook
+		set gb_name = #{gb_name}, gb_subject=#{gb_subject}, gb_email=#{gb_email}, gb_content=#{gb_content}
+		where gb_idx = #{gb_idx}
+	</update>
 </mapper>
 
 

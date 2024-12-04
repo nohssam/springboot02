@@ -14,7 +14,8 @@ import com.ict.edu3.domain.guestbook.vo.GuestBookVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Slf4j
 @RestController
@@ -81,6 +82,38 @@ public class GuestBookController {
         } catch (Exception e) {
             dataVO.setSuccess(false);
             dataVO.setMessage("게스트북 삭제 오류 발생");
+        }
+        return dataVO;
+    }
+
+    @PutMapping("/update/{gb_idx}")
+    public DataVO getGuestBookUpdate(@PathVariable String gb_idx, @RequestBody GuestBookVO gvo,
+            Authentication authentication) {
+        DataVO dataVO = new DataVO();
+        try {
+            // 로그인 여부 확인
+            if (authentication == null) {
+                dataVO.setSuccess(false);
+                dataVO.setMessage("로그인이 필요합니다.");
+                return dataVO;
+            }
+
+            // 파라미터 확인
+            int result = guestBookService.getGuestBookUpdate(gvo);
+
+            if (result == 0) {
+                log.info("result=2");
+                dataVO.setSuccess(false);
+                dataVO.setMessage("게스트북 수정 실패");
+                return dataVO;
+            }
+            dataVO.setSuccess(true);
+            dataVO.setMessage("게스트북 수정 성공");
+
+        } catch (Exception e) {
+            log.info("Exception");
+            dataVO.setSuccess(false);
+            dataVO.setMessage("게스트북 수정 오류 발생");
         }
         return dataVO;
     }
