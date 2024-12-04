@@ -1,11 +1,14 @@
 package com.ict.edu3.domain.guestbook.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ict.edu3.domain.auth.vo.DataVO;
 import com.ict.edu3.domain.guestbook.service.GuestBookService;
@@ -14,6 +17,7 @@ import com.ict.edu3.domain.guestbook.vo.GuestBookVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -118,4 +122,52 @@ public class GuestBookController {
         return dataVO;
     }
 
+    @PostMapping("/write")
+    public DataVO getGuestBookWrite(
+            @RequestParam("gb_name") String gb_name,
+            @RequestParam("gb_subject") String gb_subject,
+            @RequestParam("gb_content") String gb_content,
+            @RequestParam("gb_email") String gb_email,
+            @RequestParam(value = "file", required = false) MultipartFile file,
+            Authentication authentication) {
+
+        DataVO dataVO = new DataVO();
+        try {
+            // 로그인 여부 확인
+            if (authentication == null) {
+                dataVO.setSuccess(false);
+                dataVO.setMessage("로그인이 필요합니다.");
+                return dataVO;
+            }
+            // log.info(gb_name);
+            // log.info(gb_subject);
+            // log.info(gb_content);
+            // log.info(gb_email);
+            // log.info(file.getOriginalFilename());
+            String fileName = null;
+
+            if (file != null && !file.isEmpty()) {
+                String oriFileName = file.getOriginalFilename();
+                String fileExtension = oriFileName.substring(oriFileName.lastIndexOf("."));
+                String uuidFileName = UUID.randomUUID().toString() + fileExtension;
+            }
+
+            // 파라미터 확인
+            // int result = guestBookService.getGuestBookUpdate(gvo);
+            int result = 0;
+            if (result == 0) {
+                dataVO.setSuccess(false);
+                dataVO.setMessage("게스트북 씉기 실패");
+                return dataVO;
+            }
+            dataVO.setSuccess(true);
+            dataVO.setMessage("게스트북 쓰기 성공");
+
+        } catch (Exception e) {
+            log.info("Exception");
+            dataVO.setSuccess(false);
+            dataVO.setMessage("게스트북 쓰기 오류 발생");
+        }
+        return dataVO;
+    }
 }
