@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 // 요청별 권한 설정
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/upload/**").permitAll()
+                        .requestMatchers("/upload/**").permitAll() // URL 경로
                         // 특정 URL에 인증없이 허용
                         .requestMatchers("/api/members/join", "/api/members/login",
                                 "/api/guestbook/list", "/api/guestbook/detail/**", "api/guestbook/download/**")

@@ -21,9 +21,16 @@ spring:
         password: 1111
         driver-class-name: com.mysql.cj.jdbc.Driver
 
+    # 정적 파일(이미지, CSS, JS 등)을 URL로 접근할 수 있도록 설정하는 옵션입니다.
+    # http://localhost:8080/{파일명}
     web:
         resources:
-            static-locations: classpath:/static/    
+            static-locations: file:D:/upload/    
+            # static-locations: classpath:/static/  
+            
+# 파일 업로드 기능에서 파일이 저장될 물리적 경로를 명시.              
+file:
+  upload-dir: D:/upload
 
 server:
   port: 8080
