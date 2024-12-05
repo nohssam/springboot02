@@ -17,15 +17,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ict.edu3.domain.auth.vo.DataVO;
 import com.ict.edu3.domain.guestbook.service.GuestBookService;
 import com.ict.edu3.domain.guestbook.vo.GuestBookVO;
-
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -189,7 +186,6 @@ public class GuestBookController {
 
     @GetMapping("/download/{filename}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
-        log.info("sdfsdfsdfsdfsdfs");
         try {
             Path filePath = Paths.get("src/main/resources/static/upload").resolve(filename).normalize();
             Resource resource = new UrlResource(filePath.toUri());
