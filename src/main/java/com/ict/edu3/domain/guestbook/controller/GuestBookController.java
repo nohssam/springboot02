@@ -163,11 +163,6 @@ public class GuestBookController {
                 String f_name = uuid.toString() + "_" + file.getOriginalFilename();
                 gvo.setGb_filename(f_name);
 
-                // 프로젝트 내부의 resources/static/upload 경로
-                // String path = new File("src/main/resources/static/upload").getAbsolutePath();
-                // 실직적인 파일업로드
-                // file.transferTo(new File(path, f_name));
-
                 // Windows 외부 경로 설정
                 String path = "D:\\upload";
                 File uploadDir = new File(path);
