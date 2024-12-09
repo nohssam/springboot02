@@ -7,15 +7,20 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import com.ict.edu3.domain.auth.mapper.AuthMapper;
+import com.ict.edu3.domain.auth.vo.MembersVO;
 import com.ict.edu3.domain.auth.vo.UserVO;
+import com.ict.edu3.domain.members.mapper.MembersMapper;
 
 @Service
 public class MyUserDetailService implements UserDetailsService {
     @Autowired
     private AuthMapper authMapper;
+    @Autowired
+    private MembersMapper membersMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -31,4 +36,35 @@ public class MyUserDetailService implements UserDetailsService {
         return authMapper.selectMember(m_id);
     }
 
+    // UserDetails userDetails = userDetailService.loadUserByOAuth2User(oAuth2User,
+    // provider);
+    public UserDetails loadUserByOAuth2User(OAuth2User oAuth2User, String provider) {
+        String email = oAuth2User.getAttribute("email");
+        String name = oAuth2User.getAttribute("name");
+
+        // kakao Long 이고 String 변경안됨
+        String id = "";
+        MembersVO mvo = new MembersVO();
+        if (provider.equals("kakao")) {
+            Long kakaoId = oAuth2User.getAttribute("id");
+            id = String.valueOf(kakaoId);
+            mvo.setSns_email_kakao(email);
+            mvo.setM_name(name);
+            mvo.setM_id(id);
+            mvo.setSns_provider("kakao");
+
+        } else if (provider.equals("naver")) {
+            id = oAuth2User.getAttribute("id");
+            mvo.setSns_email_naver(email);
+            mvo.setM_name(name);
+            mvo.setM_id(id);
+            mvo.setSns_provider("naver");
+        }
+        // 아이디가 존재하면 DB에 있는 것, 아니면 DB에 없는 것
+        MembersVO mvo2 = membersMapper.findUserByProvider(mvo);
+        if (mvo2 == null) {
+            membersMapper.insertUser(mvo);
+        }
+        return new User(mvo.getM_id(), "", new ArrayList<>());
+    }
 }

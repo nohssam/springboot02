@@ -9,4 +9,8 @@ public interface MembersMapper {
     public int getMembersJoin(MembersVO mvo);
 
     public MembersVO getMembersById(String m_id);
+
+    public MembersVO findUserByProvider(MembersVO mvo);
+
+    public void insertUser(MembersVO mvo);
 }

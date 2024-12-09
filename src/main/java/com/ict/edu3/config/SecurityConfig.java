@@ -9,6 +9,9 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -38,6 +41,10 @@ public class SecurityConfig {
 
     // 서버에 들어는 모든 요청은 SecurityFilterChain 을 거친다.
     // addFilterBefore 때문에 JwtRequestFilter가 먼저 실행된다.
+
+    // 클라이언트에서 http://localhost:8080/oauth2/authorization/kakao 클릭하면
+    // SecurityFilter 자동으로 OAutheAuthorizationReqeustRedirectFiler 가 특정URL에 오면
+    // 자동으로 application.yml 에 등록을 보고 자동 처리
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         log.info("SecurityFilterChain 호출\n");
@@ -60,7 +67,7 @@ public class SecurityConfig {
                 // userInfoEndpoint => 인증과정에서 인증된 사용자에 대한 정보를 제공 하는 API 엔드포인트
                 // (사용자 정보를 가져오는 역할을 한다.)
                 .oauth2Login(oauth2 -> oauth2
-                        .successHandler(oAth2AuthenticationSuccessHandler)
+                        .successHandler(oAth2AuthenticationSuccessHandler())
                         .userInfoEndpoint(userInfo -> userInfo.userService(oAuth2UserService())))
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
@@ -73,7 +80,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    OAuth2UserService<OAuth2userRequest, OAuth2User> oAuth2UserService() {
+    OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService() {
         return new CustomerOAuth2UserService();
     }
 

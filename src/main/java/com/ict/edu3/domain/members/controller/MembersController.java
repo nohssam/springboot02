@@ -65,6 +65,7 @@ public class MembersController {
         try {
             // 사용자 정보 조회
             MembersVO membersVO = membersService.getMembersById(mvo.getM_id());
+
             if (membersVO == null) {
                 dataVO.setSuccess(false);
                 dataVO.setMessage("존재하지 않는 ID 입니다.");

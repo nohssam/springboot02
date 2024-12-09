@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MembersVO {
-    private String m_idx, m_id, m_pw, m_name, m_age, m_reg;
+    private String m_idx, m_id, m_pw, m_name, m_age, m_reg, sns_email_naver, sns_email_kakao, sns_provider;
 }

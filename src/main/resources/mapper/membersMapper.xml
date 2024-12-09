@@ -13,6 +13,54 @@
 	<select id="getMembersById" parameterType="String" resultType="MembersVO">
 		select * from members where m_id = #{m_id}
 	</select>
+
+	<select id="findUserByProvider" parameterType="MembersVO" resultType="MembersVO">
+		select * from members 
+		where  
+		(
+          (sns_provider = 'kakao' and sns_email_kakao = #{sns_email_kakao})
+		OR
+		  (sns_provider = 'naver' and sns_email_naver = #{sns_email_naver})
+		)
+	</select>
+
+	<insert id="insertUser" parameterType="MembersVO">
+		insert into members(
+			m_id, 
+			<if test="m_pw != null">
+			m_pw, 
+			</if>
+			m_name, 
+			<if test="m_age != null">
+			m_age, 
+			</if>
+			<if test="sns_email_kakao != null">
+			sns_email_kakao, 
+			</if>
+			<if test="sns_email_naver != null">
+			sns_email_naver, 
+			</if>
+			sns_provider,
+			m_reg
+		)
+		values(
+			#{m_id},
+			<if test="m_pw != null">
+			#{m_pw},
+			</if>
+			#{m_name},
+			<if test="m_age != null">
+			#{m_age},
+			</if>
+			<if test="sns_email_kakao != null">
+			#{sns_email_kakao}, 
+			</if>
+			<if test="sns_email_naver != null">
+			#{sns_email_naver}, 
+			</if>
+			#{sns_provider},
+			now())
+	</insert>
 </mapper>
 
 
