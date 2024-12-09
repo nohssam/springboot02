@@ -36,13 +36,11 @@ public class MyUserDetailService implements UserDetailsService {
         return authMapper.selectMember(m_id);
     }
 
-    // UserDetails userDetails = userDetailService.loadUserByOAuth2User(oAuth2User,
-    // provider);
+    // 정보를 받아서 DB에 저장 하기
     public UserDetails loadUserByOAuth2User(OAuth2User oAuth2User, String provider) {
         String email = oAuth2User.getAttribute("email");
         String name = oAuth2User.getAttribute("name");
 
-        // kakao Long 이고 String 변경안됨
         String id = "";
         MembersVO mvo = new MembersVO();
         if (provider.equals("kakao")) {

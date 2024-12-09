@@ -49,18 +49,12 @@ public class OAth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSu
                 }
 
                 // 성공 후 토큰을 만들어서 클라이언트에게 리다이렉트 한다.
-                // 사용자 정보를 DB에 넣자
-                // UserDetails userDetails =
-                // userDetailService.loadUserByOAuth2User(oAuth2User,provider);
-                // String token = jwtUtil.generateToken(userDetails);
-
                 String id = oAuth2User.getAttribute("id").toString();
                 String name = oAuth2User.getAttribute("name");
                 String email = oAuth2User.getAttribute("email");
                 String token = jwtUtil.generateToken(id);
 
                 // 클라이언트에 토큰, 이름, email 등 정보를 가지고 간다.
-                // response.setCharacterEncoding("UTF-8");
                 String redirectUrl = String.format(
                         "http://localhost:3000/login?token=%s&username=%s&name=%s&email=%s",
                         URLEncoder.encode(token, StandardCharsets.UTF_8),
