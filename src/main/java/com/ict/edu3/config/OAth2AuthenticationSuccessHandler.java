@@ -55,6 +55,8 @@ public class OAth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSu
                 // String token = jwtUtil.generateToken(userDetails);
 
                 String id = oAuth2User.getAttribute("id").toString();
+                String name = oAuth2User.getAttribute("name");
+                String email = oAuth2User.getAttribute("email");
                 String token = jwtUtil.generateToken(id);
 
                 // 클라이언트에 토큰, 이름, email 등 정보를 가지고 간다.
@@ -63,8 +65,8 @@ public class OAth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSu
                         "http://localhost:3000/login?token=%s&username=%s&name=%s&email=%s",
                         URLEncoder.encode(token, StandardCharsets.UTF_8),
                         URLEncoder.encode(id, StandardCharsets.UTF_8),
-                        URLEncoder.encode(oAuth2User.getAttribute("name"), StandardCharsets.UTF_8),
-                        URLEncoder.encode(oAuth2User.getAttribute("email"), StandardCharsets.UTF_8));
+                        URLEncoder.encode(name, StandardCharsets.UTF_8),
+                        URLEncoder.encode(email, StandardCharsets.UTF_8));
 
                 response.sendRedirect(redirectUrl);
             }
